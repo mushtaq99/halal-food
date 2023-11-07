@@ -11,20 +11,20 @@
             @endforeach
             </ul>
         @endif
-        <form action="/roles/{{$info['id']}}" method="post">
+        <form action="/roles/{{$role['id']}}" method="post">
             @csrf
             @method('PUT')
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Name</label>
-                <input name="name"  class="form-control" id="name" value="{{ $info['slug'] }}">
+                <input name="name"  class="form-control" id="name" value="{{ $role['slug'] }}">
             </div>
 
             <div class="form-group mb-4">
                 <label class="mb-1" for="name">Attach permissions</label>
 
                 <select name="permissions[]" id="permissions" class="form-control" multiple>
-                    @foreach($info->permissions as $permission)
-                        <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', [])) ? 'selected' : '' }}>{{ $permission->slug }}</option>
+                    @foreach($permissions as $permission)
+                        <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', $attachedPermissions)) ? 'selected' : '' }}>{{ $permission->slug }}</option>
                     @endforeach
                 </select>
 

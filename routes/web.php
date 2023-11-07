@@ -88,8 +88,8 @@ Route::group([
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');
-    Route::get('/{id}/edit', 'edit') ; //->can('update-post');
-    Route::put('/{id}', 'update');   //->can('update-post');
+    Route::get('/{role}/edit', 'edit') ; //->can('update-post');
+    Route::put('/{role}', 'update');   //->can('update-post');
 
 });
 

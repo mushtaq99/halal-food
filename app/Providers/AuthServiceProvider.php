@@ -44,27 +44,6 @@ class AuthServiceProvider extends ServiceProvider
 
 
             });
-
-
         }
-
-
-        // super admin here first call this one if true skip the other one
-        /* Gate::before(function (User $user){
-             if($user->id == 3){
-                 return true;
-             }
-             return  null;
-
-         });*/
-        /*  Gate::define('update_post', function (User $user, country $country) {
-
-              if ($user->id === $country->user_id) {
-                  return true;
-              }
-
-              return false;
-
-          });*/
     }
 }

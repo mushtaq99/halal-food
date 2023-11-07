@@ -50,28 +50,36 @@ class RoleController extends Controller
 
     }
 
-    public function edit($info)
+    public function edit(Role $role)
     {
-        $del = Role::where('id', $info)->first();
-       return view('roles.edit', ['info' => $del]);
+        $permissions = Permission::get();
+
+        return view('roles.edit', [
+           'role' => $role,
+           'permissions' => $permissions,
+            'attachedPermissions' => $role->permissions->pluck('id')->toArray(),
+       ]);
     }
 
-    public function update($id ,Request $request )
+    public function update(Role $role ,Request $request )
     {
-        return $request;
-        /*$role = Role::where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'slug' => Str::slug($request->name),
-            ]);
+        $request->validate([
+            'name' => ['required', 'min:3'],
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['integer', 'exists:permissions,id'],
+        ]);
+        
+        $role->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
 
-        // attach permissions
-        $role->permissions()->attach($request->permissions);
+        $role->permissions()->sync($request->permissions);
 
         // redirect
         return redirect()
             ->route('roles.index')
-            ->with('message', 'Role Updated Successfully.');*/
+            ->with('message', 'Role Updated Successfully.');
 
     }
 }
